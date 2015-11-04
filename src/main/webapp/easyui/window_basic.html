@@ -1,0 +1,26 @@
+<html>
+			<head>
+						<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+					
+						<title>easy_UI_window_basic</title>
+						<link rel="stylesheet" type="text/css" href="themes/default/easyui.css" >
+						<link rel="stylesheet" type="text/css" href="themes/icon.css" >
+						<link rel="stylesheet" type="text/css" href="themes/icon.css" >
+						<link rel="stylesheet" type="text/css" href="demo/demo.css">
+						<script type="text/javascript" src="jquery.min.js"></script>
+						<script type="text/javascript" src="jquery.easyui.min.js"></script>
+			</head>
+			
+			<body>
+					<h2>自定义窗口工具</h2>
+					<p>窗口可以在屏幕上自由的拖动</p>
+					<div style="margin:20px 0"> 							
+								<a href="javascript:void(0)" class="easyui-linkbutton"  onclick="$('#w').window('open')" >open</a>
+								<a href="javascript:void(0)" class="easyui-linkbutton"  onclick="$('#w').window('close')">close</a>
+					</div>
+			
+					<div id="w" class="easyui-window" title="基础窗口"    data-options="iconCls:'icon-save'" style="width:500px;height:200px;padding:10px;">
+						基础窗口
+					</div>
+			</body>
+</html>

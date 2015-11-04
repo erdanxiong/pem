@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/cache  
+	http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
+
+	<!-- 扫描注解 -->
+	<context:component-scan base-package="com" />
+
+	<!-- 配置文件读取 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:*.properties</value>
+			</list>
+		</property>
+		<property name="fileEncoding">
+			<value>UTF-8</value>
+		</property>
+	</bean>
+
+	<!-- 配置数据源 -->
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="1" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+		<property name="defaultAutoCommit" value="true" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="20" />
+		<!-- 监控数据库 -->
+		<property name="filters" value="mergeStat" />
+	</bean>
+
+	<!-- myBatis文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:com/pem/mapping/*.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.pem.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="append*" propagation="REQUIRED"  rollback-for="Exception" />
+			<tx:method name="insert*" propagation="REQUIRED"  rollback-for="Exception" />
+			<tx:method name="save*" propagation="REQUIRED"  rollback-for="Exception" />
+			<tx:method name="update*" propagation="REQUIRED"  rollback-for="Exception" />
+			<tx:method name="modify*" propagation="REQUIRED"  rollback-for="Exception" />
+			<tx:method name="edit*" propagation="REQUIRED"  rollback-for="Exception" />
+			<tx:method name="delete*" propagation="REQUIRED"  rollback-for="Exception" />
+			<tx:method name="remove*" propagation="REQUIRED"  rollback-for="Exception" />
+			<tx:method name="repair" propagation="REQUIRED"  rollback-for="Exception" />
+			<tx:method name="delAndRepair" propagation="REQUIRED"  rollback-for="Exception" />
+			<tx:method name="start*" propagation="REQUIRED"  rollback-for="Exception" />
+			<tx:method name="get*" propagation="SUPPORTS"  rollback-for="Exception" />
+			<tx:method name="find*" propagation="SUPPORTS"  rollback-for="Exception" />
+			<tx:method name="load*" propagation="SUPPORTS"  rollback-for="Exception" />
+			<tx:method name="search*" propagation="SUPPORTS"  rollback-for="Exception" />
+			<tx:method name="datagrid*" propagation="SUPPORTS"  rollback-for="Exception" />
+			<tx:method name="select*" propagation="SUPPORTS"  rollback-for="Exception" />
+			<tx:method name="*ListPage*" propagation="SUPPORTS"  rollback-for="Exception" />
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+		<aop:config>
+		<aop:pointcut id="transactionPointcut" expression="execution(* com.pem.service.impl.*.*(..))" />
+		<aop:advisor pointcut-ref="transactionPointcut" 	advice-ref="transactionAdvice" order="3"/>
+	</aop:config>
+	
+	<bean id="newTxTemplate"  
+        class="org.springframework.transaction.support.TransactionTemplate">  
+        <property name="transactionManager" ref="transactionManager" />  
+        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRES_NEW" />  
+        <property name="timeout" value="5000" />  
+    </bean>  
+</beans>
