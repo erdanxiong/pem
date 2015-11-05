@@ -46,6 +46,11 @@ $(function(){
 		//在家个人消费内容
 		consume_detail();
 	});
+	
+	$("#pem_bank").bind("click",function(){
+		//个人银行卡信息
+		pem_bank();
+	});
 });
 function consume_detail(){
 	$("#center_panel").panel({
@@ -54,6 +59,14 @@ function consume_detail(){
 		content:'<iframe src="${path}/pem/consume_detail/index"   height="100%" width="100%"></iframe>'
 	});
 }	
+
+function pem_bank(){
+	$("#center_panel").panel({
+		border:true,
+		fit:true,
+		content:'<iframe src="${path}/pem/pem_bank/index"   height="100%" width="100%"></iframe>'
+	});
+}
 </script>
 </head>
 <body>
@@ -71,6 +84,10 @@ function consume_detail(){
 			<div class="easyui-accordion" data-options="fit:true,border:true,minimizable:true">
 				<div title="日常消费" style="padding: 10px;">
 						<a  href="#"  id="person_consume_detail">个人日常消费管理</a>
+				</div>
+				<div title="个人银行卡管理" style="padding: 10px;">
+			
+						<a  href="#"  id="pem_bank">个人银行卡管理</a>
 				</div>
 			</div>
 		</div>
