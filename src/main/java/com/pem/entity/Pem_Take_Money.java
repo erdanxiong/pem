@@ -57,5 +57,4 @@ public class Pem_Take_Money {
 	public void setTake_date(Date take_date) {
 		this.take_date = take_date;
 	}
-
 }
