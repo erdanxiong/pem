@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<title>银行卡信息</title>
+<title>取钱记录</title>
 <link rel="stylesheet" type="text/css"
 	href="${path}/pem/easyui/themes/black/easyui.css">
 <link rel="stylesheet" type="text/css"
@@ -40,16 +40,16 @@
 <script type="text/javascript" src="${path}/pem/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("#pem_bank_detail").datagrid({
-		title:'银行卡信息',
+	$("#take_monoey_detail").datagrid({
+		title:'取钱记录',
 		loadMsg:"正在加载请稍后",
 		fitColumns:true,
-		url:'${path}/pem/pem_bank/getAll',
+		url:'${path}/pem/moneyController/getAll',
 		toolbar: [{
 			iconCls: 'icon-add',
 			handler: function(){
-				//添加银行卡
-				addConsume_detail();
+				//添加取钱记录
+				addtake_money();
 			}
 		},'-',{
 			iconCls: 'icon-help',
@@ -61,18 +61,22 @@ $(function(){
 		pageSize:10,
 		pageList:[10,20,30,40,50],
 		columns:[[   
-		            {field:'bankCode',title:'银行卡号',width:100,align:'center'},   
-		            {field:'bankName',title:'银行名称',width:100,align:'center'},
-		            {field:'type',title:'持卡类型',width:100,align:'center'}
+		            {field:'bank_id',title:'银行名称',width:100,align:'center'},   
+		            {field:'address',title:'取钱地点',width:100,align:'center'},
+		            {field:'sum',title:'取钱金额',width:100,align:'center'},
+		            {field:'take_date',title:'取钱时间',width:100,align:'center',formatter: function(value,row,index){
+		            	var targetDate =  new Date(value);
+		            	return  targetDate.toLocaleDateString();
+		            }}
 		        ]] 
 	});
 });
 
-//添加银行卡的js
-function addConsume_detail(){
-	$("#pem_bank_dialog").dialog({
+//添加取钱记录的js
+function addtake_money(){
+	$("#take_moeny_dialog").dialog({
 	    title: '添加银行卡',  
-	    href:'${path}/pem/pem_bank/add',
+	    href:'${path}/pem/moneyController/add',
 	    width: 450,   
 	    height: 300,   
 	    closed: false,   
@@ -81,14 +85,14 @@ function addConsume_detail(){
 	});
 }
 
-//银行卡添加
-function pem_bank_submit(){
-		$("#pem_bank_form").form("submit",{
-			url:'${path}/pem/pem_bank/addPem_bank',
+//取钱记录添加
+function take_money_submit(){
+		$("#take_money_form").form("submit",{
+			url:'${path}/pem/moneyController/addtake_money',
 			success:function(data){
 				if(data=='success'){
-					$("#pem_bank_dialog").dialog("close");
-					$("#pem_bank_detail").datagrid('reload');
+					$("#take_moeny_dialog").dialog("close");
+					$("#take_monoey_detail").datagrid('reload');
 				}
 			}
 		});
@@ -102,7 +106,7 @@ function message(message){
 </script>
 </head>
 <body>
-			<div id="pem_bank_detail"></div>
-			<div id="pem_bank_dialog"></div>
+			<div id="take_monoey_detail"></div>
+			<div id="take_moeny_dialog"></div>
 </body>
 </html>

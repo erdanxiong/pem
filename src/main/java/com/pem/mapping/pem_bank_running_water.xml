@@ -2,7 +2,7 @@
 <!DOCTYPE mapper 
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pem.dao.Pem_bankMapping">
+<mapper namespace="com.pem.dao.Pem_Bank_Runing_WaterMapping">
 	<resultMap type="com.pem.entity.Pem_Bank_Running_Water" id="pem_take_moneyMap">
 		<id column="id" property="id" />
 		<result column="user_id" property="user_id" />
@@ -14,6 +14,10 @@
 		<result column="water_date"  property="water_date"/>
 	</resultMap>
 
+
+	<select id="getAll"   resultMap="pem_take_moneyMap">
+		select * from  bank_running_water
+	</select>
 	<!-- 添加一条记录 -->
 	<insert id="add" parameterType="com.pem.entity.Pem_bank">
 		insert into bank_running_water
@@ -27,7 +31,7 @@
 			<if test="sum!=null">
 				sum,
 			</if>
-			<if test="status=null">
+			<if test="status!=null">
 				status,
 			</if>
 			<if test="bank_balance!=null">
@@ -52,7 +56,7 @@
 				#{sum,jdbcType=DECIMAL},
 			</if>
 			<if test="status!=null">
-				#{bank_id,jdbcType=INTEGER},
+				#{status,jdbcType=INTEGER},
 			</if>
 			<if test="bank_balance!=null">
 				#{bank_balance,jdbcType=DECIMAL},

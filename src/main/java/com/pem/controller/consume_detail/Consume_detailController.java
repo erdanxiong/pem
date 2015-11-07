@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pem.entity.Consume_detail;
 import com.pem.service.Consume_detailService;
+import com.pem.util.DateUtil;
 
 @Controller
 @RequestMapping(value = "/consume_detail")
@@ -50,6 +51,9 @@ public class Consume_detailController {
 		lock.lock();
 		try {
 			all = consume_detailService.getAll(begin, pageSize);
+			for(Consume_detail  consume_detail :all){
+				consume_detail.setTime(DateUtil.changeDate(consume_detail.getComsume_date()));
+			}
 			int count = consume_detailService.getCount();
 			
 			jsons.accumulate("total", count);// total代表一共有多少数据

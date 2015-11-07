@@ -1,5 +1,7 @@
 package com.pem.entity;
 
+import java.util.Date;
+
 public class Pem_bank {
 	private int id;
 	private Integer user_id;
@@ -47,4 +49,7 @@ public class Pem_bank {
 		this.type = type;
 	}
 
+
+
+	
 }

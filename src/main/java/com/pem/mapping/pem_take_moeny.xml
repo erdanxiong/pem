@@ -2,7 +2,7 @@
 <!DOCTYPE mapper 
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pem.dao.Pem_bankMapping">
+<mapper namespace="com.pem.dao.Pem_Take_MoneyMapping">
 	<resultMap type="com.pem.entity.Pem_Take_Money" id="pem_take_moneyMap">
 		<id column="id" property="id" />
 		<result column="user_id" property="user_id" />
@@ -13,7 +13,7 @@
 	</resultMap>
 
 
-	<select id="getAll">
+	<select id="getAll"  resultMap="pem_take_moneyMap">
 		select * from take_money
 	</select>
 

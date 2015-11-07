@@ -44,29 +44,37 @@
 $(function(){
 	$("#person_consume_detail").bind("click",function(){
 		//在家个人消费内容
-		consume_detail();
+		var  targetURL ="${path}/pem/consume_detail/index";
+		common(targetURL);
 	});
 	
 	$("#pem_bank").bind("click",function(){
 		//个人银行卡信息
-		pem_bank();
+		var  targetURL ="${path}/pem/pem_bank/index";
+		common(targetURL);
+	});
+	
+	$("#take_money").bind("click",function(){
+		//个人取钱记录
+		var  targetURL ="${path}/pem/moneyController/index";
+		common(targetURL);
+	});
+	
+	$("#bank_water").bind("click",function(){
+		//银行操作流水
+		var  targetURL ="${path}/pem/bank_runing_water/index";
+		common(targetURL);
 	});
 });
-function consume_detail(){
+function common(targetURL){
 	$("#center_panel").panel({
 		border:true,
 		fit:true,
-		content:'<iframe src="${path}/pem/consume_detail/index"   height="100%" width="100%"></iframe>'
+		content:'<iframe src='+targetURL+'   height="100%" width="100%"></iframe>'
 	});
 }	
 
-function pem_bank(){
-	$("#center_panel").panel({
-		border:true,
-		fit:true,
-		content:'<iframe src="${path}/pem/pem_bank/index"   height="100%" width="100%"></iframe>'
-	});
-}
+
 </script>
 </head>
 <body>
@@ -82,12 +90,11 @@ function pem_bank(){
 		<!-- 西边部分内容 -->
 		<div data-options="region:'west',split:true" title="个人开销管理" style="width: 200px;">
 			<div class="easyui-accordion" data-options="fit:true,border:true,minimizable:true">
-				<div title="日常消费" style="padding: 10px;">
-						<a  href="#"  id="person_consume_detail">个人日常消费管理</a>
-				</div>
-				<div title="个人银行卡管理" style="padding: 10px;">
-			
-						<a  href="#"  id="pem_bank">个人银行卡管理</a>
+				<div title="生活常用信息管理" style="padding: 10px;">
+						<div><a  href="#"  id="person_consume_detail">个人日常消费信息</a></div>
+						<div><a  href="#"  id="pem_bank">个人银行卡信息</a></div>
+						<div><a  href="#"  id="take_money">取钱信息</a></div>
+						<div><a  href="#"  id="bank_water">银行操作流水</a></div>
 				</div>
 			</div>
 		</div>

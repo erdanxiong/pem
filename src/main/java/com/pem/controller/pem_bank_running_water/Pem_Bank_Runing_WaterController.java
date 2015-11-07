@@ -31,8 +31,12 @@ public class Pem_Bank_Runing_WaterController {
 		List<Pem_Bank_Running_Water>  running_Waters = bank_running_waterService.getAll();
 		return  running_Waters;
 	}
-	
 	@RequestMapping(value="/add")
+	public  ModelAndView add(){
+		ModelAndView  view = new ModelAndView(common+"/add");
+		return  view ;
+	}
+	@RequestMapping(value="/addBankWater")
 	@ResponseBody
 	public String add(Pem_Bank_Running_Water  bank_running_water ){
 		bank_running_waterService.add(bank_running_water);

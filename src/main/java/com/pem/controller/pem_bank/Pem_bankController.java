@@ -31,13 +31,19 @@ public class Pem_bankController {
 		List<Pem_bank> banks = pem_banService.getAll();
 		return banks;
 	}
-
-	@RequestMapping(value = "/add")
+	@RequestMapping(value="/add")
+	public ModelAndView add(){
+		ModelAndView   view  =  new ModelAndView(common+"/add");
+		return view;
+	}
+	
+	@RequestMapping(value = "/addPem_bank")
 	@ResponseBody
-	public String add(Pem_bank bank) {
+	public String addPem_bank(Pem_bank bank) {
 		try {
 			pem_banService.addBank(bank);
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 			return "error";
 		}

@@ -24,6 +24,11 @@ public class Pem_Take_MoneyController {
 		ModelAndView view = new ModelAndView(common + "/index");
 		return view;
 	}
+	@RequestMapping(value="/add")
+	public ModelAndView  add(){
+		ModelAndView view =  new ModelAndView(common+"/add");
+		return view;
+	}
 
 	@RequestMapping(value = "getAll")
 	@ResponseBody
@@ -32,7 +37,8 @@ public class Pem_Take_MoneyController {
 		return   take_Moneys;
 	}
 	
-	@RequestMapping(value="/add")
+	@RequestMapping(value="/addtake_money")
+	@ResponseBody
 	public String  add(Pem_Take_Money   take_Money){
 		pem_Take_MoenyService.add(take_Money);
 		return "success";

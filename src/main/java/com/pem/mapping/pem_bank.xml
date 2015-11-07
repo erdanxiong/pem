@@ -17,7 +17,7 @@
 	</select>
 	
 	<!-- 添加一条记录 -->
-	<insert id="add"  parameterType="com.pem.entity.Pem_bank">
+	<insert id="addBank"  parameterType="com.pem.entity.Pem_bank">
 		insert into   pem_bank 
 		<trim prefix="("   suffix=")"   suffixOverrides=",">
 				<if test="user_id!=null">
@@ -48,11 +48,11 @@
 				</if>
 				
 				<if test="bankName!=null">
-					  #{bankName,jdbcType=DECIMAL},
+					  #{bankName,jdbcType=VARCHAR},
 				</if>
 				
 				<if test="type!=null">
-					  #{comsume_date,jdbcType=TIMESTAMP},
+					  #{type,jdbcType=INTEGER},
 				</if>
 		</trim>
 	</insert>

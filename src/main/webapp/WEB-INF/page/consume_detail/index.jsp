@@ -64,10 +64,13 @@ $(function(){
 		            {field:'consume_name',title:'名称',width:100,align:'center'},   
 		            {field:'consume_sum',title:'消费金额(元)',width:100,align:'center'},
 		            {field:'consume_address',title:'消费地址',width:100,align:'center'},
-		            {field:'comsume_date',title:'消费日期',width:100,align:'center'},
+		            {field:'time',title:'消费日期',width:100,align:'center',formatter:function(value,row,index){
+		            	  	var unixTimestamp = new Date(value);  
+	                         return unixTimestamp.toLocaleString();
+		            }},
 		            {field:'consume_reason',title:'消费原因',width:100,align:'center'},
 		            {field:'record_id',title:'录入ip',width:100,align:'center'},
-		            {field:'isNeed',title:'必要字段',width:100,align:'center'}
+		            {field:'isNeed',title:'消费类型',width:100,align:'center'}
 		        ]] 
 	});
 });
@@ -87,12 +90,13 @@ function addConsume_detail(){
 
 //日常消费添加
 function consume_detail_submit(){
-
 		$("#consume_detail_form").form("submit",{
 			url:'${path}/pem/consume_detail/addConsume_detail',
 			success:function(data){
 				if(data=='success'){
+					$("#consume_detail_dialog").dialog('close');
 					$("#consume_detail").datagrid('reload');
+					
 				}
 			}
 		});

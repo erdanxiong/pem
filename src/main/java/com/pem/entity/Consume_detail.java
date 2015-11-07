@@ -26,6 +26,8 @@ public class Consume_detail {
 	// 是否是必要字段
 	private Integer isNeed;
 
+	private String time;
+	
 	public int getId() {
 		return id;
 	}
@@ -98,4 +100,13 @@ public class Consume_detail {
 		this.isNeed = isNeed;
 	}
 
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	
 }
