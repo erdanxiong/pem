@@ -279,7 +279,7 @@
 		var now = new Date();
 		var todayInfo = now.getFullYear()+','+(now.getMonth()+1)+','+now.getDate();
 		var currentInfo = opts.current ? (opts.current.getFullYear()+','+(opts.current.getMonth()+1)+','+opts.current.getDate()) : '';
-		// calulate the saturday and sunday index
+		// calculate the saturday and sunday index
 		var saIndex = 6 - opts.firstDay;
 		var suIndex = saIndex + 1;
 		if (saIndex >= 7) saIndex -= 7;
